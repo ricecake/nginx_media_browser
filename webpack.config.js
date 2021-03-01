@@ -43,7 +43,9 @@ module.exports = {
 			production: false,
 		}),
 		...pages.map(page => new HtmlWebpackPlugin({
+			title: 'Greenstuff media',
 			filename: page,
+//			template: 'source/index.html',
 		})),
 	],
 	context: path.resolve(__dirname),
@@ -91,6 +93,7 @@ module.exports = {
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),
 		compress: true,
+		disableHostCheck: true,   // That solved it
 		port: 9004
 	},
 };
