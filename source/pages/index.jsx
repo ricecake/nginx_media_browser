@@ -7,14 +7,20 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
+
+import Browser from "Component/Browser";
+
 export const App = (props) => {
 	console.log(props);
 	return (
-		<div>Hello world!</div>
+		<div>
+			Hello world!
+			<Browser {...props}/>
+		</div>
 	);
 };
 
-const stateToProps = (x) => (x);
+const stateToProps = (state) => (state);
 const dispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
 export default connect(stateToProps, dispatchToProps)(App);
