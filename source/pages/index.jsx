@@ -14,7 +14,6 @@ export const App = (props) => {
 	console.log(props);
 	return (
 		<div>
-			Hello world!
 			<Browser {...props}/>
 		</div>
 	);

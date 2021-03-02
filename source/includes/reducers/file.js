@@ -5,6 +5,7 @@ const defaultState = {
 	loading: false,
 	loaded: false,
 	fileList: [null],
+	opened: null,
 };
 
 export const fetchFiles = (path = '/') => (dispatch, getState) => {
@@ -26,13 +27,16 @@ export const {
 	clearList,
 	fetchStart,
 	fetchFinish,
+	openFile,
 } = createActions({
 	clearList: () => ({}),
 	fetchStart: () => ({}),
 	fetchFinish: (files) => (files),
+	openFile: (file) => (file),
 }, { prefix: "media/files" });
 
 const reducer = handleActions({
+	[openFile]: (state, {payload: file}) => merge(state, {opened: file}),
 	[clearList]: (state, payload) => merge(state, defaultState),
         [fetchStart]: (state, payload) => merge(state, { loading: true, loaded: false}),
         [fetchFinish]: (state, {payload: files}) => merge(state, { loading: false, loaded: true, fileList: files}),
