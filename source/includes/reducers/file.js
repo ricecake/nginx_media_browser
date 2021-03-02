@@ -14,23 +14,27 @@ export const fetchFiles = (path = '/') => (dispatch, getState) => {
 		.then(data => {
 			console.log(data);
 			dispatch(fetchFinish(data.map((file)=>({
-				id: `${file.name}_${file.type}`,
+				id: `${path}_${file.name}_${file.type}`,
 				name: file.name,
 				isDir: file.type === 'directory',
+				fullPath: `${path}/${file.name}`.replace(/\/{2,}/, '/'),
 			}))));
 		});
 };
 
 export const {
+	clearList,
 	fetchStart,
 	fetchFinish,
 } = createActions({
+	clearList: () => ({}),
 	fetchStart: () => ({}),
 	fetchFinish: (files) => (files),
 }, { prefix: "media/files" });
 
 const reducer = handleActions({
-        [fetchStart]: (state, payload) => merge(state, { loading: true, loaded: false}),
+	[clearList]: (state, payload) => merge(state, defaultState),
+        [fetchStart]: (state, payload) => merge(state, { loading: true, loaded: false, fileList: [null]}),
         [fetchFinish]: (state, {payload: files}) => merge(state, { loading: false, loaded: true, fileList: files}),
 }, defaultState);
 
