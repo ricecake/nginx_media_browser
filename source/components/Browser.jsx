@@ -12,11 +12,16 @@ import {
     FileData,
     FileHelper,
     FullFileBrowser,
+    setChonkyDefaults,
 } from 'chonky';
+
+import { ChonkyIconFA } from 'chonky-icon-fontawesome';
+
+setChonkyDefaults({ iconComponent: ChonkyIconFA });
 
 const pathToChain = (path = '/') => path.split('/').map((frag, index, array) => ({
 	id: `${path}_${frag}_directory`,
-	name: frag,
+	name: frag || "Root",
 	isDir: true,
 	fullPath: index === 0? '/' : array.slice(0, index+1).join('/'),
 }));
@@ -42,10 +47,8 @@ export const Browser = ({file, location, history, fetchFiles}) => {
 		<FullFileBrowser
 			files={file.fileList}
 			folderChain={pathToChain(location.pathname)}
-	//		fileActions={fileActions}
 			onFileAction={(data) => handleAction(data, history, fetchFiles)}
 	//		thumbnailGenerator={thumbnailGenerator}
-//			{...props}
 		/>
 	);
 };

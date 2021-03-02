@@ -34,7 +34,7 @@ export const {
 
 const reducer = handleActions({
 	[clearList]: (state, payload) => merge(state, defaultState),
-        [fetchStart]: (state, payload) => merge(state, { loading: true, loaded: false, fileList: [null]}),
+        [fetchStart]: (state, payload) => merge(state, { loading: true, loaded: false}),
         [fetchFinish]: (state, {payload: files}) => merge(state, { loading: false, loaded: true, fileList: files}),
 }, defaultState);
 
