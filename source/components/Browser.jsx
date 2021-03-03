@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
 
-import { fetchFiles, openFile } from "Include/reducers/file";
+import { fetchFiles, openFile, closeFile } from "Include/reducers/file";
 import { Show } from "Component/Helpers";
 
 import {
@@ -17,6 +17,8 @@ import {
 } from 'chonky';
 
 import { ChonkyIconFA } from 'chonky-icon-fontawesome';
+
+import Modal from "react-modal";
 
 setChonkyDefaults({ iconComponent: ChonkyIconFA });
 
@@ -44,7 +46,7 @@ const handleAction = (data, history, fetchFiles, openFile) => {
 	}
 };
 
-export const Browser = ({file, location, history, fetchFiles, openFile}) => {
+export const Browser = ({file, location, history, fetchFiles, openFile, closeFile}) => {
 	console.log("file", file);
 	if (!(file.loading || file.loaded === location.pathname)) {
 		fetchFiles(location.pathname);
@@ -55,14 +57,24 @@ export const Browser = ({file, location, history, fetchFiles, openFile}) => {
 				folderChain={pathToChain(location.pathname)}
 				onFileAction={(data) => handleAction(data, history, fetchFiles, openFile)}
 			/>
-			<Show If={file.opened}>
-				<video controls src={`/content/${file.opened}`}/>
-			</Show>
+			<Modal isOpen={file.opened} onRequestClose={closeFile}>
+				<video
+					controls
+					src={`/content/${file.opened}`}
+					style={{
+						'margin': '0 auto',
+						'display': 'block',
+						'min-width': '10%',
+						'max-width': '95%',
+						'max-height': '95%',
+					}}
+				/>
+			</Modal>
 		</div>
 	);
 };
 
 const stateToProps = ({file}) => ({file});
-const dispatchToProps = (dispatch) => bindActionCreators({fetchFiles, openFile}, dispatch);
+const dispatchToProps = (dispatch) => bindActionCreators({fetchFiles, openFile, closeFile}, dispatch);
 
 export default connect(stateToProps, dispatchToProps)(Browser);

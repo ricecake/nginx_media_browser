@@ -27,15 +27,18 @@ export const {
 	fetchStart,
 	fetchFinish,
 	openFile,
+	closeFile,
 } = createActions({
 	clearList: () => ({}),
 	fetchStart: () => ({}),
 	fetchFinish: (path, files) => ({path, files}),
 	openFile: (file) => (file),
+	closeFile: () => ({}),
 }, { prefix: "media/files" });
 
 const reducer = handleActions({
 	[openFile]: (state, {payload: file}) => merge(state, {opened: file}),
+	[closeFile]: (state, payload) => merge(state, {opened: null}),
 	[clearList]: (state, payload) => merge(state, defaultState),
         [fetchStart]: (state, payload) => merge(state, { loading: true, loaded: false}),
         [fetchFinish]: (state, {payload: {path, files}}) => merge(state, { loading: false, loaded: path, fileList: files}),
