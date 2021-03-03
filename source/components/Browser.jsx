@@ -45,11 +45,11 @@ const handleAction = (data, history, fetchFiles, openFile) => {
 };
 
 export const Browser = ({file, location, history, fetchFiles, openFile}) => {
-	console.log(file);
-	if (!(file.loading || file.loaded)) {
+	console.log("file", file);
+	if (!(file.loading || file.loaded === location.pathname)) {
 		fetchFiles(location.pathname);
 	}
-	return (<div>
+	return (<div style={{ height: '100vh', width: '100vw' }}>
 			<FullFileBrowser
 				files={file.fileList}
 				folderChain={pathToChain(location.pathname)}

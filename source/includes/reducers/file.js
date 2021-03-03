@@ -4,7 +4,7 @@ import { MakeMerge } from "Include/reducers/helpers";
 const defaultState = {
 	loading: false,
 	loaded: false,
-	fileList: [null],
+	fileList: [],
 	opened: null,
 };
 
@@ -13,8 +13,7 @@ export const fetchFiles = (path = '/') => (dispatch, getState) => {
 	fetch('/api' + path)
 		.then(response => response.json())
 		.then(data => {
-			console.log(data);
-			dispatch(fetchFinish(data.map((file)=>({
+			dispatch(fetchFinish(path, data.map((file)=>({
 				id: `${path}_${file.name}_${file.type}`,
 				name: file.name,
 				isDir: file.type === 'directory',
@@ -31,7 +30,7 @@ export const {
 } = createActions({
 	clearList: () => ({}),
 	fetchStart: () => ({}),
-	fetchFinish: (files) => (files),
+	fetchFinish: (path, files) => ({path, files}),
 	openFile: (file) => (file),
 }, { prefix: "media/files" });
 
@@ -39,7 +38,7 @@ const reducer = handleActions({
 	[openFile]: (state, {payload: file}) => merge(state, {opened: file}),
 	[clearList]: (state, payload) => merge(state, defaultState),
         [fetchStart]: (state, payload) => merge(state, { loading: true, loaded: false}),
-        [fetchFinish]: (state, {payload: files}) => merge(state, { loading: false, loaded: true, fileList: files}),
+        [fetchFinish]: (state, {payload: {path, files}}) => merge(state, { loading: false, loaded: path, fileList: files}),
 }, defaultState);
 
 const merge = MakeMerge((newState)=> {
