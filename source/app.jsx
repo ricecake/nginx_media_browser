@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import store from 'Include/store';
 import App from "Page/index";
 
+import 'Style/app.css';
+
 import {
 	BrowserRouter as Router,
 	Switch,

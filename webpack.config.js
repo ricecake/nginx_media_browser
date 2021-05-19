@@ -56,6 +56,7 @@ module.exports = {
 			Page: path.resolve(__dirname, 'source/pages/'),
 			Component: path.resolve(__dirname, 'source/components/'),
 			Include: path.resolve(__dirname, 'source/includes/'),
+			Style: path.resolve(__dirname, 'source/styles'),
 		}
 	},
 	optimization: {
