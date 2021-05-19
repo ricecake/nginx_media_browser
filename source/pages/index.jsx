@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux'
 import Browser from "Component/Browser";
 
 export const App = (props) => {
-	console.log(props);
 	return (
 		<div>
 			<Browser {...props}/>
