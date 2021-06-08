@@ -22,6 +22,10 @@ import Modal from "react-modal";
 
 setChonkyDefaults({ iconComponent: ChonkyIconFA });
 
+Modal.defaultStyles.overlay.backgroundColor = 'rgba(128, 128, 128, .5)';
+Modal.defaultStyles.content.backgroundColor = 'rgba(128, 128, 128, 1)';
+Modal.defaultStyles.content.border = '1px solid black';
+
 const pathToChain = (path = '/') => path.split('/').map((frag, index, array) => ({
 	id: `${path}_${frag}_directory`,
 	name: frag || "Root",
@@ -65,8 +69,9 @@ export const Browser = ({file, location, history, fetchFiles, openFile, closeFil
 
 	let openedFile = getUrlFile(location);
 
-	return (<div style={{ height: '100vh', width: '100vw' }}>
+	return (<div style={{ margin: '0 auto', height: '98vh', width: '98vw' }}>
 			<FullFileBrowser
+				darkMode={true}
 				files={file.fileList}
 				folderChain={pathToChain(location.pathname)}
 				onFileAction={(data) => handleAction(data, history, openFile)}
@@ -75,6 +80,8 @@ export const Browser = ({file, location, history, fetchFiles, openFile, closeFil
 				isOpen={file.isOpen}
 				onRequestClose={()=>{ history.push(location.pathname); closeFile()} }
 				contentLabel={openedFile}
+				//className="modal"
+				//overlayClassName="overlay"
 			>
 				<Show If={file.isOpen}>
 					<h2 style={{'text-align': 'center'}}>{openedFile}</h2>
